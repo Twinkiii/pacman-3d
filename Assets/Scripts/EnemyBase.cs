@@ -56,7 +56,7 @@ namespace Pacman
             m_Model.SetChasing(false);
         }
 
-        public void ResetToSpawn()
+        public virtual void ResetToSpawn()
         {
             m_Agent.Warp(m_SpawnPosition);
             m_Model.ResetToSpawn();

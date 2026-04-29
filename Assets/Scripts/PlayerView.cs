@@ -6,7 +6,7 @@ namespace Pacman
     [RequireComponent(typeof(CharacterController))]
     public class PlayerView : MonoBehaviour
     {
-        [SerializeField] private float m_Speed = 5f;
+        
 
         private PlayerViewModel m_ViewModel;
         private IPlayerInput m_Input;

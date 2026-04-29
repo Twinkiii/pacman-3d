@@ -1,5 +1,5 @@
-namespace Common
-{
+namespace Pacman
+{ 
     public class Timer
     {
         private float m_CurrentTime;
