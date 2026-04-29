@@ -63,5 +63,10 @@ namespace Pacman
             if (Vector3.Distance(transform.position, target) < m_DistanceThreshold)
                 m_CurrentPatrolIndex = (m_CurrentPatrolIndex + 1) % m_PatrolPoints.Length;
         }
+
+        public void SetPatrolPoints(Transform[] points)
+        {
+            m_PatrolPoints = points;
+        }
     }
 }

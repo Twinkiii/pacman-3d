@@ -1,94 +1,80 @@
 using System;
-using Unity.AI.Navigation;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pacman
 {
-    public class MazeGenerator : MonoBehaviour
+    public class MazeGenerator 
     {
-        [Header("Prefabs")]
-        [SerializeField] private GameObject m_WallPrefab;
-        [SerializeField] private GameObject m_PelletPrefab;
-        [SerializeField] private GameObject m_FloorPrefab;
+        public int[,] Map { get; private set; }
+        public List<Vector2Int> FreeCells { get; private set; }
 
+        private int m_Width;
+        private int m_Height;
 
-        [Header("Settings")]
-        [SerializeField] private float m_CellSize = 2f;
-
-        [Header("NavMesh")]
-        [SerializeField] private NavMeshSurface m_NavMeshSurface;
-
-
-        private readonly int[,] m_Map = new int[,]
+        public MazeGenerator(int width, int height)
         {
-            { 1,1,1,1,1,1,1,1,1,1,1,1,1 },
-            { 1,0,0,0,0,0,1,0,0,0,0,0,1 },
-            { 1,0,1,1,0,0,0,0,0,1,1,0,1 },
-            { 1,0,1,0,0,1,0,1,0,0,1,0,1 },
-            { 1,0,0,0,1,0,0,0,1,0,0,0,1 },
-            { 1,0,1,0,0,0,1,0,0,0,1,0,1 },
-            { 1,0,0,1,0,1,1,1,0,1,0,0,1 },
-            { 1,1,0,0,0,0,1,0,0,0,0,1,1 },
-            { 1,0,0,1,0,1,1,1,0,1,0,0,1 },
-            { 1,0,1,0,0,0,1,0,0,0,1,0,1 },
-            { 1,0,0,0,1,0,0,0,1,0,0,0,1 },
-            { 1,0,1,0,0,1,0,1,0,0,1,0,1 },
-            { 1,0,1,1,0,0,0,0,0,1,1,0,1 },
-            { 1,0,0,0,0,0,1,0,0,0,0,0,1 },
-            { 1,1,1,1,1,1,1,1,1,1,1,1,1 },
-        };
-
-        private void Awake()
-        {
-            GenerateMaze();
-            BakeNavMesh();
+            m_Width = width % 2 == 0 ? width + 1 : width;
+            m_Height = height % 2 == 0 ? height + 1 : height;
+            FreeCells = new List<Vector2Int>();
         }
 
-        private void BakeNavMesh()
+        public void Generate()
         {
-            if (m_NavMeshSurface != null)
-                m_NavMeshSurface.BuildNavMesh();
-        }
+            Map = new int[m_Height, m_Width];
 
-        private void GenerateMaze()
-        {
-            int rows = m_Map.GetLength(0);
-            int cols = m_Map.GetLength(1);
+            for(int r = 0; r < m_Height; r++)
+                for(int c = 0; c < m_Width; c++)
+                    Map[r, c] = 1;
 
-            float offsetX = -((float)cols * m_CellSize) / 2f;
-            float offsetZ = -((float)rows * m_CellSize) / 2f;
+            CarvePassage(1, 1);
 
-
-            for(int row = 0; row < rows; row++)
+            FreeCells.Clear();
+            for(int r = 0; r < m_Height; r++)
             {
-                for(int col = 0; col < cols; col++)
+                for(int c = 0; c < m_Width; c++)
                 {
-                    float x = col * m_CellSize + offsetX;
-                    float z = row * m_CellSize + offsetZ;
-
-                    if(m_FloorPrefab != null)
+                    if(Map[r, c] == 0)
                     {
-                        Instantiate(m_FloorPrefab, new Vector3(x, 0f, z), 
-                                    Quaternion.identity, transform);
-                    }
-
-                    if (m_Map[row, col] == 1)
-                    {
-                        if (m_WallPrefab != null)
-                        {
-                            Instantiate(m_WallPrefab, new Vector3(x, 1f, z), 
-                                        Quaternion.identity, transform);
-                        }
-                    }
-                    else
-                    {
-                        if (m_PelletPrefab != null)
-                        {
-                            Instantiate(m_PelletPrefab, new Vector3(x, 0.5f, z),
-                                        Quaternion.identity, transform);
-                        }
+                        FreeCells.Add(new Vector2Int(c, r));
                     }
                 }
+            }
+        }
+
+        private void CarvePassage(int row, int col)
+        {
+            Map[row, col] = 0;
+
+            int[]dRow = {-2, 2, 0, 0 };
+            int[]dCol = {0, 0, -2, 2 };
+            Shuffle(dRow, dCol);
+            for(int i = 0; i < 4; i++)
+            {
+                int newRow = row + dRow[i];
+                int newCol = col + dCol[i];
+                if(IsInBounds(newRow, newCol) && Map[newRow, newCol] == 1)
+                {
+                    Map[row + dRow[i]/2, col + dCol[i]/2] = 0;
+                    CarvePassage(newRow, newCol);
+                    }
+                }
+            }
+
+        private bool IsInBounds(int newRow, int newCol)
+        {
+            return newRow > 0 && newRow < m_Height - 1 && 
+                   newCol > 0 && newCol < m_Width - 1;
+        }
+        
+
+        private void Shuffle(int[] dRow, int[] dCol)
+        {
+            for(int i = 3; i >= 0; i--)
+            {
+                int j = UnityEngine.Random.Range(0, i + 1);
+                int tmpR = dRow[i]; dRow[i] = dRow[j]; dRow[j] = tmpR;
+                int tmpC = dCol[i]; dCol[i] = dCol[j]; dCol[j] = tmpC;
             }
         }
     }

@@ -2,14 +2,10 @@ using UnityEngine;
 
 namespace Pacman
 {
-
     public class GameBootstrap : MonoBehaviour
     {
-        [Header("Player")]
-        [SerializeField] private PlayerView m_PlayerView;
+        [Header("UI")]
         [SerializeField] private VirtualJoystick m_Joystick;
-        [SerializeField] private Transform m_PlayerSpawnPoint;
-
 
         [Header("Settings")]
         [SerializeField] private int m_StartLives = 3;
@@ -20,27 +16,41 @@ namespace Pacman
         private GameViewModel m_GameViewModel;
         private PlayerViewModel m_PlayerViewModel;
 
-        private void Awake()
+        private void Start()
         {
-            
+
+            var playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj == null)
+            {
+                Debug.LogError("GameBootstrap: Player not found!");
+                return;
+            }
+
+            var playerView = playerObj.GetComponent<PlayerView>();
+            if (playerView == null)
+            {
+                Debug.LogError("GameBootstrap: PlayerView not found on Player object!");
+                return;
+            }
+
             int totalPellets = FindObjectsByType<CollectibleView>().Length;
 
-            
+
             m_GameModel = new GameModel(m_StartLives, totalPellets);
             m_PlayerModel = new PlayerModel(m_PlayerSpeed);
 
-            
+
             m_GameViewModel = new GameViewModel(m_GameModel);
             m_PlayerViewModel = new PlayerViewModel(m_PlayerModel);
 
-            
+
             m_PlayerViewModel.OnPlayerDied += m_GameViewModel.NotifyPlayerDied;
 
-            
-            m_PlayerView.Construct(m_PlayerViewModel, m_Joystick);
-            
 
-            
+            playerView.Construct(m_PlayerViewModel, m_Joystick);
+
+
+
             foreach (var collectible in FindObjectsByType<CollectibleView>())
                 collectible.Construct(m_GameViewModel);
         }

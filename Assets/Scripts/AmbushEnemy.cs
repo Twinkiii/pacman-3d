@@ -7,7 +7,8 @@ namespace Pacman
         [SerializeField] private float m_AmbushRange = 4f;
         [SerializeField] private float m_ReturnDelay = 5f;
 
-        private bool m_IsAmbushing = true;
+        private enum State { Ambushing, Chasing, Returning }
+        private State m_State = State.Ambushing;
         private Timer m_ReturnTimer;
 
 
@@ -27,34 +28,63 @@ namespace Pacman
             m_ReturnTimer.RemoveTime(Time.deltaTime);
             float distToPlayer = Vector3.Distance(transform.position, m_PlayerTransform.position);
 
-            if (m_IsAmbushing)
+            switch (m_State)
             {
-                //Wait for player to get close enough, then start chasing
-                m_Agent.ResetPath();
-                if(distToPlayer < m_AmbushRange)
-                {
-                    m_IsAmbushing = false;
-                    m_Model.SetChasing(true);
-                    m_ReturnTimer.Restart();
-                }
-            }
-            else
-            {
-                m_Agent.SetDestination(m_PlayerTransform.position);
-
-                if(distToPlayer > m_ChaseRange && m_ReturnTimer.IsFinished)
-                {
-                    m_IsAmbushing = true;
+                case State.Ambushing:
+                   
+                    m_Agent.ResetPath();
                     m_Model.SetChasing(false);
+
+                    if (distToPlayer < m_AmbushRange)
+                    {
+                        
+                        m_State = State.Chasing;
+                        m_Model.SetChasing(true);
+                        m_ReturnTimer.Restart();
+                    }
+                    break;
+
+                case State.Chasing:
+                   
+                    m_Agent.SetDestination(m_PlayerTransform.position);
+
+                    if (distToPlayer > m_ChaseRange && m_ReturnTimer.IsFinished)
+                    {
+                        
+                        m_State = State.Returning;
+                        m_Model.SetChasing(false);
+                    }
+                    break;
+
+                case State.Returning:
+                    
                     m_Agent.SetDestination(m_SpawnPosition);
-                }
+
+                    float distToSpawn = Vector3.Distance(
+                        transform.position,
+                        m_SpawnPosition);
+
+                    if (distToSpawn < 0.5f)
+                    {
+                        
+                        m_State = State.Ambushing;
+                    }
+
+                    
+                    if (distToPlayer < m_AmbushRange)
+                    {
+                        m_State = State.Chasing;
+                        m_Model.SetChasing(true);
+                        m_ReturnTimer.Restart();
+                    }
+                    break;
             }
         }
 
         public override void ResetToSpawn()
         {
             base.ResetToSpawn();
-            m_IsAmbushing = true;
+            m_State = State.Ambushing;
         }
 
 #if UNITY_EDITOR
