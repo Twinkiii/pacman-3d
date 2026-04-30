@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277f1aebcc3f7284b8812c0d6e93fe47, type: 3}
   m_Name: Sounds
   m_EditorClassIdentifier: Assembly-CSharp::Pacman.Sounds
-  m_Sounds: []
+  m_Sounds:
+  - {fileID: 8300000, guid: 4f59ce53b19e7044cb0494c8a4f4b4cd, type: 3}
+  - {fileID: 8300000, guid: cfd658f33c778f9499eccf4c81e6ca39, type: 3}
+  - {fileID: 8300000, guid: b620ea5a388bea140afbf08d64fc795b, type: 3}
+  - {fileID: 8300000, guid: a9636f911ffd3954087f1120eaa1b5b1, type: 3}
+  - {fileID: 8300000, guid: 37e4b11727495d643b099bef49a23e76, type: 3}
+  - {fileID: 8300000, guid: cacbb807866278f4484dd590d759a7ba, type: 3}

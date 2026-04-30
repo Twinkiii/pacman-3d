@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,9 @@ namespace Pacman
         [Header("Joystick")]
         [SerializeField] private GameObject m_JoystickObject;
 
+        [Header("Ability Panel")]
+        [SerializeField] private AbilityPanelView m_AbilityPanel;
+
         [Header("Panels")]
         [SerializeField] private PausePanelView m_PausePanel;
         [SerializeField] private WinPanelView m_WinPanel;
@@ -23,10 +27,12 @@ namespace Pacman
         [SerializeField] private AudioClip m_GameBGM;
 
         private GameViewModel m_ViewModel;
+        private PlayerProgressModel m_Progress;
 
-        public void Construct(GameViewModel viewModel, int totalPellets)
+        public void Construct(GameViewModel viewModel, int totalPellets, PlayerProgressModel progress)
         {
             m_ViewModel = viewModel;
+            m_Progress = progress;
 
             m_PelletsView?.Initialise(totalPellets);
 
@@ -59,21 +65,24 @@ namespace Pacman
             switch (state)
             {
                 case GameState.Playing:
-                    SoundPlayer.Instance.PlayBGM(m_GameBGM);
                     m_PauseButtonView?.Show();
+                    m_AbilityPanel?.Show();
                     ShowJoystick();
                     Time.timeScale = 1f;
                     break;
 
                 case GameState.Paused:
                     m_PausePanel?.Show();
+                    m_AbilityPanel?.Hide();
                     HideJoystick();
                     Time.timeScale = 0f;
                     break;
 
                 case GameState.Win:
+                    SaveProgress();
                     Sound.Win.Play();
                     SoundPlayer.Instance.StopBGM();
+                    m_AbilityPanel?.Hide();
                     m_WinPanel?.Show(
                         m_ViewModel.Score,
                         m_ViewModel.CollectedPellets,
@@ -83,8 +92,10 @@ namespace Pacman
                     break;
 
                 case GameState.Lose:
+                    SaveProgress();
                     Sound.Lose.Play();
                     SoundPlayer.Instance.StopBGM();
+                    m_AbilityPanel?.Hide();
                     m_LosePanel?.Show(
                         m_ViewModel.Score,
                         m_ViewModel.CollectedPellets,
@@ -93,6 +104,13 @@ namespace Pacman
                     Time.timeScale = 0f;
                     break;
             }
+        }
+
+        private void SaveProgress()
+        {
+            m_Progress.AddPellets(m_ViewModel.CollectedPellets);
+            PlayerProgressService.Save(m_Progress);
+            Debug.Log($"Saved! Total pellets: {m_Progress.TotalPellets}");
         }
 
         private void ShowJoystick()
@@ -115,9 +133,8 @@ namespace Pacman
         private void GoToMenu()
         {
             Time.timeScale = 1f;
-            // SceneManager.LoadScene("MainMenu");
-            SceneManager.LoadScene(
-                SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("MainMenu");
+            
         }
 
         private void OnDestroy()

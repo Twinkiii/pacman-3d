@@ -75,7 +75,12 @@ namespace Pacman
             }
         }
 
-
+        public void ActivateStartingInvincibility(float duration)
+        {
+            m_IsInvincible = true;
+            m_InvincibleTimer = duration;
+            Debug.Log($"Invincibility activated for {duration}s!");
+        }
 
         private void onDied()
         {

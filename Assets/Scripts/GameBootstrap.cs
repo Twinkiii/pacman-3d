@@ -7,6 +7,7 @@ namespace Pacman
         [Header("UI")]
         [SerializeField] private VirtualJoystick m_Joystick;
         [SerializeField] private GameHUDView m_HUDView;
+        [SerializeField] private AbilityPanelView m_AbilityPanel;
 
         [Header("Settings")]
         [SerializeField] private int m_StartLives = 3;
@@ -37,6 +38,8 @@ namespace Pacman
             int totalPellets = FindObjectsByType<CollectibleView>().Length;
             Debug.Log($"Total pellets: {totalPellets}");
 
+            var progress = PlayerProgressService.Load();
+
 
             m_GameModel = new GameModel(m_StartLives, totalPellets);
             m_PlayerModel = new PlayerModel(m_PlayerSpeed);
@@ -48,19 +51,30 @@ namespace Pacman
 
             m_PlayerViewModel.OnPlayerDied += m_GameViewModel.NotifyPlayerDied;
 
+            var abilityViewModel = new AbilityViewModel(progress, m_GameModel, this);
+            abilityViewModel.OnInvincibilityActivated += duration =>
+                playerView.ActivateStartingInvincibility(duration);
+            abilityViewModel.OnExtraLifeActivated += () =>
+                m_GameModel.AddLife();
 
             playerView.Construct(m_PlayerViewModel, m_Joystick);
 
             if (m_HUDView != null)
-                m_HUDView.Construct(m_GameViewModel, totalPellets);
+                m_HUDView.Construct(m_GameViewModel, totalPellets, progress);
             else
                 Debug.LogError("GameBootstrap: HUDView not assigned!");
 
-
+            m_AbilityPanel?.Construct(abilityViewModel);
 
             foreach (var collectible in FindObjectsByType<CollectibleView>())
                 collectible.Construct(m_GameViewModel);
+
+            
+
+
         }
+
+
 
         private void OnDestroy()
         {

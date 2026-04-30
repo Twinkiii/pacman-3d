@@ -6,8 +6,7 @@ namespace Pacman
         PlayerDie = 1,        
         Win = 2,              
         Lose = 3,             
-        GameBGM = 4,          
-        MenuBGM = 5
+        MenuClick = 4
     }
     public static class SoundExtensions
     {

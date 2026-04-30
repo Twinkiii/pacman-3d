@@ -41,6 +41,13 @@ namespace Pacman
 
         }
 
+        public void AddLife()
+        {
+            Lives++;
+            OnLivesChanged?.Invoke(Lives);
+        }
+
+
         public void LoseLife()
         {
             Lives--;
@@ -48,6 +55,13 @@ namespace Pacman
 
             if (Lives <= 0)
                 ChangeState(GameState.Lose);
+        }
+
+        public void SpendCollectedPellets(int amount)
+        {
+            CollectedPellets -= amount;
+            if (CollectedPellets < 0) CollectedPellets = 0;
+            OnPelletsChanged?.Invoke(CollectedPellets);
         }
 
         public void ChangeState(GameState newState)
