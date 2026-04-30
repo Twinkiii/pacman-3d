@@ -6,6 +6,7 @@ namespace Pacman
     {
         [Header("UI")]
         [SerializeField] private VirtualJoystick m_Joystick;
+        [SerializeField] private GameHUDView m_HUDView;
 
         [Header("Settings")]
         [SerializeField] private int m_StartLives = 3;
@@ -34,6 +35,7 @@ namespace Pacman
             }
 
             int totalPellets = FindObjectsByType<CollectibleView>().Length;
+            Debug.Log($"Total pellets: {totalPellets}");
 
 
             m_GameModel = new GameModel(m_StartLives, totalPellets);
@@ -48,6 +50,11 @@ namespace Pacman
 
 
             playerView.Construct(m_PlayerViewModel, m_Joystick);
+
+            if (m_HUDView != null)
+                m_HUDView.Construct(m_GameViewModel, totalPellets);
+            else
+                Debug.LogError("GameBootstrap: HUDView not assigned!");
 
 
 

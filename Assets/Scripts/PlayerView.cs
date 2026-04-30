@@ -13,6 +13,12 @@ namespace Pacman
         private CharacterController m_Controller;
         private Vector3 m_SpawnPostion;
 
+
+        private bool m_IsInvincible;
+        private float m_InvincibleDuration = 1.5f;
+        private float m_InvincibleTimer;
+
+
         public void Construct(PlayerViewModel viewModel, IPlayerInput input)
         {
             m_ViewModel = viewModel;
@@ -30,6 +36,14 @@ namespace Pacman
         {
             if (m_ViewModel == null) return;
 
+            if (m_IsInvincible)
+            {
+                m_InvincibleTimer -= Time.deltaTime;
+                if (m_InvincibleTimer <= 0f)
+                    m_IsInvincible = false;
+            }
+
+
             var dir = m_Input.MoveDirection;
             m_ViewModel.SetMoveDirection(dir);
 
@@ -44,15 +58,31 @@ namespace Pacman
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject == gameObject) return;
+
+            if (other.TryGetComponent<CollectibleView>(out _)) return;
+
+            Debug.Log($"Trigger with: {other.gameObject.name} layer: {other.gameObject.layer}");
+
+            Debug.Log($"Trigger with: {other.gameObject.name}");
             if (other.TryGetComponent<IEnemy>(out _))
+            {
+                if (m_IsInvincible) return;
+                m_IsInvincible = true;
+                m_InvincibleTimer = m_InvincibleDuration;
+                Debug.Log("Hit enemy!");
                 m_ViewModel.NotifyHitEnemy();
+            }
         }
 
 
 
         private void onDied()
         {
+            Debug.Log("PlayerView: OnDied called — respawning");
+            m_Controller.enabled = false;
             transform.position = m_SpawnPostion;
+            m_Controller.enabled = true;
             m_ViewModel.Respawn(m_SpawnPostion);
         }
 

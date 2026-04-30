@@ -16,6 +16,7 @@ namespace Pacman
         public event Action<int> OnLivesChanged;
         public event Action<GameState> OnStateChanged;
         public event Action OnAllPelletsCollected;
+        public event Action<int> OnPelletsChanged;
 
 
         public GameModel(int startLives, int totalPellets)
@@ -33,6 +34,8 @@ namespace Pacman
             OnScoreChanged?.Invoke(Score);
 
             CollectedPellets++;
+            OnPelletsChanged?.Invoke(CollectedPellets);
+
             if (CollectedPellets >= TotalPellets)
                 OnAllPelletsCollected?.Invoke();
 

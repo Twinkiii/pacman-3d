@@ -9,10 +9,13 @@ namespace Pacman
 
         public int Score => m_Model.Score;
         public int Lives => m_Model.Lives;
+        public int CollectedPellets => m_Model.CollectedPellets;
+        public int TotalPellets => m_Model.TotalPellets;
         public GameState CurrentState => m_Model.State;
 
         public event Action<int> OnScoreUpdated;
         public event Action<int> OnLivesUpdated;
+        public event Action<int> OnPelletsUpdated;
         public event Action<GameState> OnStateChanged;
 
 
@@ -21,6 +24,7 @@ namespace Pacman
             m_Model = model;
             m_Model.OnScoreChanged += score => OnScoreUpdated?.Invoke(score);
             m_Model.OnLivesChanged += lives => OnLivesUpdated?.Invoke(lives);
+            m_Model.OnPelletsChanged += pellets => OnPelletsUpdated?.Invoke(pellets);
             m_Model.OnStateChanged += state => OnStateChanged?.Invoke(state);
             m_Model.OnAllPelletsCollected += () => m_Model.ChangeState(GameState.Win);
         }

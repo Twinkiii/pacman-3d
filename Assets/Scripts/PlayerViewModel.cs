@@ -20,7 +20,11 @@ namespace Pacman
         
         public void ReportPosition(Vector3 newPosition) => m_Model.UpdatePosition(newPosition);
         public void SetMoveDirection(Vector2 dir) => m_Model.SetDirection(dir);
-        public void NotifyHitEnemy() => m_Model.Die();
+        public void NotifyHitEnemy() 
+        {
+            Debug.Log("PlayerViewModel: NotifyHitEnemy called");
+            m_Model.Die();
+        }
         public void Respawn(Vector3 spawnPoint) => m_Model.Respawn(spawnPoint);
     }
 }
