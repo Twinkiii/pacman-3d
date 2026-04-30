@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Pacman
@@ -11,6 +12,8 @@ namespace Pacman
         public int ScoreValue => m_ScoreValue;
         public bool IsCollected => m_IsCollected;
 
+        public event Action OnCollected;
+
         public void Construct(GameViewModel gameViewModel)
         {
             m_GameViewModel = gameViewModel;
@@ -23,7 +26,9 @@ namespace Pacman
 
             m_GameViewModel?.NotifyCollected(m_ScoreValue);
 
-            gameObject.SetActive(false);
+            OnCollected?.Invoke();
+
+            Destroy(gameObject);
         }
 
         private void OnTriggerEnter(Collider other)

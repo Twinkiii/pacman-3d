@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 887254121738594967}
   - component: {fileID: 1831545997084506140}
   - component: {fileID: 8041436585182251726}
+  - component: {fileID: 7184069792216500293}
+  - component: {fileID: 4170914605505515393}
   m_Layer: 0
   m_Name: AmbushEnemy
   m_TagString: Untagged
@@ -72,6 +74,46 @@ MonoBehaviour:
   m_ChaseRange: 8
   m_AmbushRange: 4
   m_ReturnDelay: 5
+--- !u!114 &7184069792216500293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064281552986252701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a216baaf522164ab4cabe649ec5b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pacman.MinimapMarker
+  m_Type: 1
+  m_PlayerColor: {r: 0, g: 1, b: 0, a: 1}
+  m_EnemyColor: {r: 1, g: 0, b: 0, a: 1}
+  m_WallColor: {r: 0, g: 0, b: 1, a: 1}
+  m_PelletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!136 &4170914605505515393
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064281552986252701}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2418635639550606308
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +125,6 @@ GameObject:
   - component: {fileID: 8570595533815928463}
   - component: {fileID: 455787494213701434}
   - component: {fileID: 6148923923343403057}
-  - component: {fileID: 4991627172739780730}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -163,29 +204,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4991627172739780730
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2418635639550606308}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5301148673443689943
 GameObject:
   m_ObjectHideFlags: 0

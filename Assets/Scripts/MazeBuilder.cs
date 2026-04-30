@@ -60,18 +60,26 @@ namespace Pacman
 
         private void SpawnWall(float x, float z)
         {
-            if (m_WallPrefab != null)
-                Instantiate(m_WallPrefab,
-                    new Vector3(x, 1f, z),
-                    Quaternion.identity, transform);
+            if (m_WallPrefab == null) return;
+
+            var wall = Instantiate(m_WallPrefab,
+                new Vector3(x, 1f, z),
+                Quaternion.identity, transform);
+
+            var marker = wall.AddComponent<MinimapMarker>();
+            marker.Initialise(MinimapMarker.MarkerType.Wall);
         }
 
         private void SpawnPellet(float x, float z)
         {
-            if (m_PelletPrefab != null)
-                Instantiate(m_PelletPrefab,
-                    new Vector3(x, 0.5f, z),
-                    Quaternion.identity, transform);
+            if (m_PelletPrefab == null) return;
+
+            var pellet = Instantiate(m_PelletPrefab,
+                new Vector3(x, 0.5f, z),
+                Quaternion.identity, transform);
+
+            var marker = pellet.AddComponent<MinimapMarker>();
+            marker.Initialise(MinimapMarker.MarkerType.Pellet);
         }
     }
 }

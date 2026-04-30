@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8118250784492895911}
+  - component: {fileID: 3552942435651620808}
+  - component: {fileID: 2261201386911691573}
+  - component: {fileID: 4504119600301884708}
   m_Layer: 0
   m_Name: Pellet
   m_TagString: Untagged
@@ -32,6 +35,57 @@ Transform:
   - {fileID: 3685406155410622523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3552942435651620808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645194170446697564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a216baaf522164ab4cabe649ec5b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pacman.MinimapMarker
+  m_Type: 3
+  m_PlayerColor: {r: 0, g: 1, b: 0, a: 1}
+  m_EnemyColor: {r: 1, g: 0, b: 0, a: 1}
+  m_WallColor: {r: 0, g: 0, b: 1, a: 1}
+  m_PelletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &2261201386911691573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645194170446697564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ded5f2b332fe24a841fa03824cc5fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pacman.CollectibleView
+  m_ScoreValue: 10
+--- !u!135 &4504119600301884708
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645194170446697564}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.152
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3923090273171740380
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,8 +97,6 @@ GameObject:
   - component: {fileID: 8071713926742047527}
   - component: {fileID: 5633421915986630541}
   - component: {fileID: 9184936502433541791}
-  - component: {fileID: 7594861175724722270}
-  - component: {fileID: 4160737880908075625}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -124,40 +176,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7594861175724722270
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3923090273171740380}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4160737880908075625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3923090273171740380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8ded5f2b332fe24a841fa03824cc5fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Pacman.CollectibleView
-  m_ScoreValue: 10
 --- !u!1 &8233073507162259794
 GameObject:
   m_ObjectHideFlags: 0

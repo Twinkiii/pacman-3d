@@ -47,7 +47,8 @@ namespace Pacman
             Vector3 pos = CellToWorld(cell);
             pos.y = 1f;
 
-            Instantiate(m_PlayerPrefab, pos, Quaternion.identity);
+            var player = Instantiate(m_PlayerPrefab, pos, Quaternion.identity);
+            var marker = player.AddComponent<MinimapMarker>();
         }
 
         private void SpawnAmbushEnemy()
@@ -66,7 +67,8 @@ namespace Pacman
             Vector3 pos = CellToWorld(cell);
             pos.y = 1f;
 
-            Instantiate(m_AmbushPrefab, pos, Quaternion.identity);
+            var enemy = Instantiate(m_AmbushPrefab, pos, Quaternion.identity);
+            enemy.AddComponent<MinimapMarker>();
         }
 
         private void SpawnDirectChaseEnemy()
@@ -77,7 +79,8 @@ namespace Pacman
             Vector3 pos = CellToWorld(cell);
             pos.y = 1f;
 
-            Instantiate(m_DirectChasePrefab, pos, Quaternion.identity);
+            var enemy = Instantiate(m_DirectChasePrefab, pos, Quaternion.identity);
+            enemy.AddComponent<MinimapMarker>();
         }
 
         private void SpawnPatrolChaseEnemy()
@@ -89,6 +92,7 @@ namespace Pacman
             pos.y = 1f;
 
             var enemy = Instantiate(m_PatrolChasePrefab, pos, Quaternion.identity);
+            enemy.AddComponent<MinimapMarker>();
 
             var patrol = enemy.GetComponent<PatrolChaseEnemy>();
             if (patrol != null)

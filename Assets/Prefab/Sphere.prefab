@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8755763173368194125}
   - component: {fileID: 6581895717849948036}
   - component: {fileID: 2248161324594803191}
+  - component: {fileID: 2300425765606006475}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Player
@@ -151,3 +152,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d4ed79ae941f143bef9ff242598716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pacman.PlayerView
+--- !u!114 &2300425765606006475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850575807132054855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a216baaf522164ab4cabe649ec5b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pacman.MinimapMarker
+  m_Type: 0
+  m_PlayerColor: {r: 0, g: 1, b: 0, a: 1}
+  m_EnemyColor: {r: 1, g: 0, b: 0, a: 1}
+  m_WallColor: {r: 0, g: 0, b: 1, a: 1}
+  m_PelletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
