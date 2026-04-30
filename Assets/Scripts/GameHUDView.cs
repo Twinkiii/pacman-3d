@@ -20,6 +20,8 @@ namespace Pacman
         [SerializeField] private WinPanelView m_WinPanel;
         [SerializeField] private LosePanelView m_LosePanel;
 
+        [SerializeField] private AudioClip m_GameBGM;
+
         private GameViewModel m_ViewModel;
 
         public void Construct(GameViewModel viewModel, int totalPellets)
@@ -57,6 +59,7 @@ namespace Pacman
             switch (state)
             {
                 case GameState.Playing:
+                    SoundPlayer.Instance.PlayBGM(m_GameBGM);
                     m_PauseButtonView?.Show();
                     ShowJoystick();
                     Time.timeScale = 1f;
@@ -69,6 +72,8 @@ namespace Pacman
                     break;
 
                 case GameState.Win:
+                    Sound.Win.Play();
+                    SoundPlayer.Instance.StopBGM();
                     m_WinPanel?.Show(
                         m_ViewModel.Score,
                         m_ViewModel.CollectedPellets,
@@ -78,6 +83,8 @@ namespace Pacman
                     break;
 
                 case GameState.Lose:
+                    Sound.Lose.Play();
+                    SoundPlayer.Instance.StopBGM();
                     m_LosePanel?.Show(
                         m_ViewModel.Score,
                         m_ViewModel.CollectedPellets,

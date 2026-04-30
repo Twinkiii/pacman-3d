@@ -1,21 +1,22 @@
 using UnityEngine;
 
 
-[DisallowMultipleComponent]
-public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
+namespace Pacman
 {
-
-
-    
-    public static T Instance { get; private set; }
-
-    public void Init()
+    [DisallowMultipleComponent]
+    public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
     {
-        if (Instance != null) 
-        { 
-            Destroy(this); 
-            return; 
+        public static T Instance { get; private set; }
+
+        protected virtual void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(this);
+                return;
+            }
+            Instance = this as T;
+            DontDestroyOnLoad(gameObject);
         }
-        Instance = this as T;
     }
 }

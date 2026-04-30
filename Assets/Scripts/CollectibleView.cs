@@ -24,6 +24,8 @@ namespace Pacman
             if (m_IsCollected) return;
             m_IsCollected = true;
 
+            Sound.PelletCollect.Play();
+
             m_GameViewModel?.NotifyCollected(m_ScoreValue);
 
             OnCollected?.Invoke();

@@ -15,7 +15,7 @@ namespace Pacman
 
 
         private bool m_IsInvincible;
-        private float m_InvincibleDuration = 1.5f;
+        private float m_InvincibleDuration = 3.5f;
         private float m_InvincibleTimer;
 
 
@@ -79,6 +79,7 @@ namespace Pacman
 
         private void onDied()
         {
+            Sound.PlayerDie.Play();
             Debug.Log("PlayerView: OnDied called — respawning");
             m_Controller.enabled = false;
             transform.position = m_SpawnPostion;
