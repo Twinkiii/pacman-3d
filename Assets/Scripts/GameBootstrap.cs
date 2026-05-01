@@ -1,3 +1,10 @@
+using Pacman.Models;
+using Pacman.Services;
+using Pacman.ViewModels;
+using Pacman.Views.Collectibles;
+using Pacman.Views.Player;
+using Pacman.Views.UI;
+using Pacman.Views.UI.HUD;
 using UnityEngine;
 
 namespace Pacman
@@ -20,6 +27,9 @@ namespace Pacman
 
         private void Start()
         {
+
+            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 0;
 
             var playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj == null)
