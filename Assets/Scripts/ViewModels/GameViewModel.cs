@@ -36,6 +36,7 @@ namespace Pacman.ViewModels
         public void StartGame() => m_Model.ChangeState(GameState.Playing);
         public void PauseGame() => m_Model.ChangeState(GameState.Paused);
         public void ResumeGame() => m_Model.ChangeState(GameState.Playing);
+        public void ConsumeAllSpendablePellets() => m_Model.ConsumeAllSpendablePellets();
 
 
         public void NotifyCollected(int scoreValue) => m_Model.AddScore(scoreValue);

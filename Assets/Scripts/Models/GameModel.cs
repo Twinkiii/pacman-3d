@@ -72,6 +72,13 @@ namespace Pacman.Models
             OnSpendablePelletsChanged?.Invoke(SpendablePellets);
         }
 
+        public void ConsumeAllSpendablePellets()
+        {
+            if (SpendablePellets == 0) return;
+            SpendablePellets = 0;
+            OnSpendablePelletsChanged?.Invoke(SpendablePellets);
+        }
+
         public void ChangeState(GameState newState)
         {
             if (State == newState)

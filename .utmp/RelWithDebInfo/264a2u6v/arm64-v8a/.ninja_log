@@ -1,0 +1,10 @@
+# ninja log v5
+6	3191	7992987005196616	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	507be7e5a65e5d0
+31	3256	7992987003984995	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	326624086f9c74ba
+44	3339	7992987004301995	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	3450bf7d1ce1dd19
+15	3341	7992987005177081	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	e0657875c081c0bd
+11	3391	7992987004312058	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	7ca271088c708f79
+21	3437	7992987007749168	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	f785896fc03828c9
+1	3542	7992987008798030	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	6abb1c1f3e86d365
+109	3884	7992987012310084	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	66e519a466369bb6
+3885	4036	7992987013838611	D:/fedya/Unityproject/Minotaurs Labyrinth/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/264a2u6v/obj/arm64-v8a/libgame.so	9ab027fc68a9e2f3

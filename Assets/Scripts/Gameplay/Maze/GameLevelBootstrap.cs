@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.AI.Navigation;
 using Pacman.Gameplay.Spawning;
+using System.Collections;
 
 namespace Pacman.Gameplay.Maze
 {
@@ -34,6 +35,25 @@ namespace Pacman.Gameplay.Maze
                 m_MazeBuilder);
 
             m_EntitySpawner.SpawnAll();
+
+            StartCoroutine(InitMinimapNextFrame());
+        }
+
+        private IEnumerator InitMinimapNextFrame()
+        {
+
+            yield return null;
+
+
+            var minimapCam = GameObject.Find("MinimapCamera")
+                ?.GetComponent<Camera>();
+
+            if (minimapCam != null)
+            {
+                minimapCam.enabled = false;
+                minimapCam.enabled = true;
+                Debug.Log("MinimapCamera restarted after spawn!");
+            }
         }
     }
 }

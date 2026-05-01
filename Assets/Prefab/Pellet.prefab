@@ -48,10 +48,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pacman.MinimapMarker
   m_Type: 3
-  m_PlayerColor: {r: 0, g: 1, b: 0, a: 1}
-  m_EnemyColor: {r: 1, g: 0, b: 0, a: 1}
-  m_WallColor: {r: 0, g: 0, b: 1, a: 1}
-  m_PelletColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  m_PlayerMaterial: {fileID: 2100000, guid: 405cc0dc329b9404fbe2316bbbba589c, type: 2}
+  m_EnemyMaterial: {fileID: 2100000, guid: 18dc83a241e98764aa8a353af8c270e9, type: 2}
+  m_WallMaterial: {fileID: 2100000, guid: efdd6597d48710d42ad8391263073ca3, type: 2}
+  m_PelletMaterial: {fileID: 2100000, guid: 62d4d61d47fdf854298e1b4758a38a2d, type: 2}
+  m_PlayerSize: 1.5
+  m_EnemySize: 1.2
+  m_WallSize: 2
+  m_PelletSize: 0.85
+  m_MarkerHeight: 25
 --- !u!114 &2261201386911691573
 MonoBehaviour:
   m_ObjectHideFlags: 0

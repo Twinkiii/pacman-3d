@@ -153,6 +153,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6526817989773113148}
+  - component: {fileID: 1463290621354444026}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -176,3 +177,25 @@ Transform:
   - {fileID: 5439593963154126951}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1463290621354444026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438140903954743090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a216baaf522164ab4cabe649ec5b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pacman.Views.UI.Minimap.MinimapMarker
+  m_Type: 2
+  m_PlayerMaterial: {fileID: 2100000, guid: 405cc0dc329b9404fbe2316bbbba589c, type: 2}
+  m_EnemyMaterial: {fileID: 2100000, guid: 18dc83a241e98764aa8a353af8c270e9, type: 2}
+  m_WallMaterial: {fileID: 2100000, guid: efdd6597d48710d42ad8391263073ca3, type: 2}
+  m_PelletMaterial: {fileID: 2100000, guid: 62d4d61d47fdf854298e1b4758a38a2d, type: 2}
+  m_PlayerSize: 1.5
+  m_EnemySize: 1.2
+  m_WallSize: 2
+  m_PelletSize: 0.85
+  m_MarkerHeight: 25

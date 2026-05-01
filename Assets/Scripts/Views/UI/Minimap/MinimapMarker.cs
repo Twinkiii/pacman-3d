@@ -7,11 +7,23 @@ namespace Pacman.Views.UI.Minimap
     {
         public enum MarkerType { Player, Enemy, Wall, Pellet }
 
+        [Header("Marker Type")]
         [SerializeField] private MarkerType m_Type;
-        [SerializeField] private Color m_PlayerColor = Color.green;
-        [SerializeField] private Color m_EnemyColor = Color.red;
-        [SerializeField] private Color m_WallColor = Color.blue;
-        [SerializeField] private Color m_PelletColor = Color.yellow;
+
+        [Header("Marker Materials")]
+        [SerializeField] private Material m_PlayerMaterial;
+        [SerializeField] private Material m_EnemyMaterial;
+        [SerializeField] private Material m_WallMaterial;
+        [SerializeField] private Material m_PelletMaterial;
+
+        [Header("Marker Sizes")]
+        [SerializeField] private float m_PlayerSize = 1.5f;
+        [SerializeField] private float m_EnemySize = 1.2f;
+        [SerializeField] private float m_WallSize = 2f;
+        [SerializeField] private float m_PelletSize = 0.85f;
+
+        [Header("Marker Height")]
+        [SerializeField] private float m_MarkerHeight = 25f;
 
         private GameObject m_Marker;
         private Transform m_MarkerTransform;
@@ -19,6 +31,7 @@ namespace Pacman.Views.UI.Minimap
         private void Start()
         {
             CreateMarker();
+
             if (m_Type == MarkerType.Pellet)
             {
                 var collectible = GetComponent<CollectibleView>();
@@ -27,35 +40,41 @@ namespace Pacman.Views.UI.Minimap
             }
         }
 
-        
         private void CreateMarker()
         {
-            
+            int layer = GetLayer();
+
+            if (layer == -1)
+            {
+                Debug.LogError($"MinimapMarker: Layer NOT FOUND for type={m_Type}! Check Tags and Layers settings!");
+                return;
+            }
+
+            Material markerMaterial = GetMaterial();
+            if (markerMaterial == null)
+            {
+                Debug.LogError($"MinimapMarker: Material is not assigned for type={m_Type}! Assign it in the Inspector.");
+                return;
+            }
+
             m_Marker = GameObject.CreatePrimitive(PrimitiveType.Quad);
             m_Marker.name = $"MinimapMarker_{m_Type}";
 
-            
             Destroy(m_Marker.GetComponent<Collider>());
 
-            
-            m_Marker.layer = GetLayer();
+            m_Marker.layer = layer;
 
-            
             var renderer = m_Marker.GetComponent<Renderer>();
-            var mat = new Material(Shader.Find("Unlit/Color"));
-            mat.color = GetColor();
-            renderer.material = mat;
+            renderer.sharedMaterial = markerMaterial;
 
-            
             float size = GetSize();
             m_Marker.transform.localScale = new Vector3(size, size, size);
-
-            
             m_Marker.transform.rotation = Quaternion.Euler(90, 0, 0);
 
             m_MarkerTransform = m_Marker.transform;
-        }
 
+            Debug.Log($"MinimapMarker: Created {m_Type} on layer {layer}");
+        }
 
         private void RemoveMarker()
         {
@@ -63,24 +82,20 @@ namespace Pacman.Views.UI.Minimap
                 Destroy(m_Marker);
         }
 
-
         private void LateUpdate()
         {
             if (m_MarkerTransform == null) return;
 
-            
             m_MarkerTransform.position = new Vector3(
                 transform.position.x,
-                25f, 
+                m_MarkerHeight,
                 transform.position.z);
         }
-
 
         public void Initialise(MarkerType type)
         {
             m_Type = type;
         }
-
 
         private int GetLayer()
         {
@@ -94,15 +109,15 @@ namespace Pacman.Views.UI.Minimap
             }
         }
 
-        private Color GetColor()
+        private Material GetMaterial()
         {
             switch (m_Type)
             {
-                case MarkerType.Player: return m_PlayerColor;
-                case MarkerType.Enemy: return m_EnemyColor;
-                case MarkerType.Wall: return m_WallColor;
-                case MarkerType.Pellet: return m_PelletColor;
-                default: return Color.white;
+                case MarkerType.Player: return m_PlayerMaterial;
+                case MarkerType.Enemy: return m_EnemyMaterial;
+                case MarkerType.Wall: return m_WallMaterial;
+                case MarkerType.Pellet: return m_PelletMaterial;
+                default: return null;
             }
         }
 
@@ -110,16 +125,13 @@ namespace Pacman.Views.UI.Minimap
         {
             switch (m_Type)
             {
-                case MarkerType.Player: return 1.5f;
-                case MarkerType.Enemy: return 1.2f;
-                case MarkerType.Wall: return 2f;
-                case MarkerType.Pellet: return 0.85f;
+                case MarkerType.Player: return m_PlayerSize;
+                case MarkerType.Enemy: return m_EnemySize;
+                case MarkerType.Wall: return m_WallSize;
+                case MarkerType.Pellet: return m_PelletSize;
                 default: return 1f;
             }
         }
-
-
-        
 
         private void OnDestroy()
         {

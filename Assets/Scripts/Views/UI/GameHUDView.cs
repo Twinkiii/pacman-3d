@@ -115,8 +115,8 @@ namespace Pacman.Views.UI
         private void SaveProgress()
         {
             m_Progress.AddPellets(m_ViewModel.CollectedPellets);
+            m_ViewModel.ConsumeAllSpendablePellets();
             PlayerProgressService.Save(m_Progress);
-            Debug.Log($"Saved! Total pellets: {m_Progress.TotalPellets}");
         }
 
         private void ShowJoystick()
